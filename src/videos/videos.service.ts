@@ -19,7 +19,7 @@ export class VideosService {
       throw new InvalidRelationError('Category not found');
     }
 
-    this.prismaService.video.create({
+    return this.prismaService.video.create({
       data: {
         title: createVideoDto.title,
         description: createVideoDto.description,
@@ -30,18 +30,25 @@ export class VideosService {
   }
 
   findAll() {
-    return `This action returns all videos`;
+    return this.prismaService.video.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} video`;
+    return this.prismaService.video.findUniqueOrThrow({
+      where: { id },
+    });
   }
 
   update(id: number, updateVideoDto: UpdateVideoDto) {
-    return `This action updates a #${id} video`;
+    return this.prismaService.video.update({
+      where: { id },
+      data: updateVideoDto,
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} video`;
+    return this.prismaService.video.delete({
+      where: { id },
+    });
   }
 }
