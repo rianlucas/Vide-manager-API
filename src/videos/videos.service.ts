@@ -8,14 +8,15 @@ import { InvalidRelationError } from 'src/errors/invalid-relation.error';
 export class VideosService {
   constructor(private prismaService: PrismaService) {}
 
-  create(createVideoDto: CreateVideoDto) {
-    const categoryExists = this.prismaService.category.count({
+  async create(createVideoDto: CreateVideoDto) {
+    const categoryExists = await this.prismaService.category.count({
       where: {
         id: createVideoDto.category_id,
       },
     });
 
     if (!categoryExists) {
+      console.log('passou');
       throw new InvalidRelationError('Category not found');
     }
 
