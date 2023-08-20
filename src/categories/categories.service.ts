@@ -12,11 +12,15 @@ export class CategoriesService {
   }
 
   findAll() {
-    return `This action returns all categories`;
+    return this.prismaService.category.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} category`;
+    return this.prismaService.category.findUniqueOrThrow({
+      where: {
+        id,
+      },
+    });
   }
 
   update(id: number, updateCategoryDto: UpdateCategoryDto) {
